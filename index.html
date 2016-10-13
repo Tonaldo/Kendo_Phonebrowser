@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.default.mobile.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.3.914/js/kendo.all.min.js" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://kendo.cdn.telerik.com/2016.2.714/js/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-touch.js"></script>
+
+
+
+    <script src="https://kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script>
+</head>
+<body>
+
+        <div id="example">
+        <div class="wrapper">
+             
+        
+ 
+            <div id="grid"></div>
+
+</div>
+        </div>
+
+            
+                
+  
+            
+            <script>
+           
+                $(document).ready(function() {
+                    var grid = $("#grid").kendoGrid({
+
+                      //Datasource to define which data Kendo Grid uses
+                      dataSource: {
+                            type: "json",
+                            transport: {
+                              read: { 
+                                url: "/Phones"
+                              } 
+                            },
+                        serverPaging: false,
+                        },
+                        sortable: {
+                            mode: "single",
+                            allowUnsort: false
+                        },
+                        pageable: {
+                        pageSize: 5,
+                        buttonCount: 1,
+                        numeric: false,
+                        info: true
+                        },
+                        mobile: true,
+                        //Actions when data is bound to grid
+                        dataBound: function() {
+                           
+                            //If stock is "out of stock", color the text 'red'
+                             $('td').each(function(){if($(this).text()=='Out of stock'){$(this).addClass('outofstock')}})
+                             // Make table more easily readable using odd & even rules
+                            $( "tr:odd" ).css( "background-color", "#e9e9e9" );
+                        }, 
+                        //Defining which columns/header there will be. Using this, Kendo can automatically assign values under them.
+                        columns: [
+                            {
+                                field: "Model",
+                                title: "Model",
+                                width: "420px"
+                            },
+                            {
+                                field: "Display",
+                                title: "Display",
+                                width: "220px"
+                            },
+                            {
+                                field: "OS",
+                                width: "220px"
+                            },
+                            {
+                               field: "Stock",
+                               width: "160px"
+                            
+                            },
+                            {
+                                field: "Monthly",
+                                width: "160px"
+                            },
+                            {
+                                field: "Onetime"
+                            }
+                        ]      
+            });
+                        
+        });
+
+
+
+               
+            </script>
+        </div>
+
+
+</body>
+</html>
