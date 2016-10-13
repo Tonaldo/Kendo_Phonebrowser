@@ -23,13 +23,18 @@
         <div id="example">
         <div class="wrapper">
              
+        <div class="form-group has-feedback" id="search">
+            <h3> Phones </h3>
+                <input type="search"  placeholder="Search" id="searchBox" class="search-query"/>  
         
+        </div>
+
  
             <div id="grid"></div>
 
 </div>
         </div>
-
+           <!-- Template which Kendo uses to generate specific page parts -->
             <script type="text/x-kendo-template" id="template">
                 <div class="tabstrip">
                     <ul>
@@ -44,6 +49,7 @@
                     <div>
                         <div class='employee-details'>
                             <ul>
+                            <!--Kendo uses hashtag markup to bind data -->
                                 <H2>#= Model #</H2>
                                 <p><label style="width: auto; padding-left: 10px;">Monthly</label><b style="color: green"> #= Monthly # </b>  <label style="width: auto; padding-left: 10px;">One-time</label><b style="color: green"> #= Onetime #</b></p>
                                 
@@ -93,6 +99,8 @@
                         pageable: {
                         pageSize: 5,
                         buttonCount: 1,
+                        detailTemplate: kendo.template($("#template").html()), //defines that we use template which was created above
+                        detailInit: detailInit, // Defines details action below
                         numeric: false,
                         info: true
                         },
@@ -138,9 +146,52 @@
                         
         });
 
+        var timeout;
+$("#search").find("#searchBox").keydown(function() {
+    // Keydown makes filter live action so no need to press any buttons
+    // Clears any pending filtering requests 
+    clearTimeout(timeout);
+    var searchValue = $('#searchBox').val();
+    // Filters the grid after 100 milliseconds
+    timeout = setTimeout(function() {
+         grid.data("kendoGrid").dataSource.filter({
+                      logic  : "or",
+                      filters: [
+                      {
+                        field   : "Model",
+                        operator: "contains",
+                        value   : searchValue
+                      },
+                      {
+                        field   : "Display",
+                        operator: "contains",
+                        value   : searchValue
+                      },
+                      {
+                        field   : "OS",
+                        operator: "contains",
+                        value   : searchValue
+                      }
+                     
+                    ]
+                     });
+    }, 100);
+});
+                //Adds details some fade effect
+                function detailInit(e) {
+                    var detailRow = e.detailRow;
 
+                    detailRow.find(".tabstrip").kendoTabStrip({
+                        animation: {
+                            open: { effects: "fadeIn" }
+                        }
+                    });
 
-               
+                }
+    // Adds some resizing for mobile screens
+    $(window).on("resize", function() {
+      kendo.resize($("#wrapper"));
+    });             
             </script>
         </div>
 
