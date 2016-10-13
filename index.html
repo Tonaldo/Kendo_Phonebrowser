@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.714/styles/kendo.default.mobile.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.3.914/js/kendo.all.min.js" />
-    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://kendo.cdn.telerik.com/2016.2.714/js/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
@@ -31,7 +30,44 @@
 </div>
         </div>
 
-            
+            <script type="text/x-kendo-template" id="template">
+                <div class="tabstrip">
+                    <ul>
+                        
+                        <li class="k-state-active">
+                            Basic Information
+                        </li>
+                        <li class="images_tab">
+                            Images
+                        </li>
+                    </ul>
+                    <div>
+                        <div class='employee-details'>
+                            <ul>
+                                <H2>#= Model #</H2>
+                                <p><label style="width: auto; padding-left: 10px;">Monthly</label><b style="color: green"> #= Monthly # </b>  <label style="width: auto; padding-left: 10px;">One-time</label><b style="color: green"> #= Onetime #</b></p>
+                                
+                                <img src='#= Image# ' height="350" width="350" alt="image"/>
+                                <div>
+                                <h3> Description </h3>
+                                <p>#= Details #</p>
+
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="images">
+                    <p>
+                    <img height="200" width="200" src='#= Image2# ' alt="image"/>
+                    </p>
+                    <p>
+                    <img height="200" width="200" src='#= Image3# ' alt="image"/>
+                    
+                    </p>
+                     </div>
+
+                </div>
+                </script>
                 
   
             
