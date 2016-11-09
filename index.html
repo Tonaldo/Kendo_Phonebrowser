@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kendo UI Phonebrowser</title>
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.914/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.914/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.914/styles/kendo.default.mobile.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://kendo.cdn.telerik.com/2016.3.914/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2016.3.914/js/kendo.all.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+
+<div id="example">
+    <div class="wrapper">
+             
+   
+        <div class="form-group has-feedback" id="search">
+            <h3> Phones </h3>
+                <input type="search"  placeholder="Search" id="searchBox" class="search-query"/>     
+        </div>
+
+        <div id="grid"></div>
+        <button class="button btn-primary" id="addNew-btn">Add new phone</button>
+        <div id="addNew">
+            <form action="/Phones" id="phoneForm" method="POST">
+
+                <fieldset>
+
+                    <div class="well">
+                  
+                        <div class="form-group required ">
+            
+                            <div class="col-lg-2 control-label">
+                              <label>Model</label>
+                            </div>
+                            <div class="col-lg-2">                  
+                              <input id="model"   name="Model" type="text" placeholder="Model" required class="form-control" validationMessage="Please add model name. At least two charachters" pattern="^[a-zA-Z0-9_ ]*$">
+                            </div>
+                             
+                            <div class="col-lg-2 control-label">
+                              <label>Display</label>
+                            </div> 
+                            <div class="col-lg-2">
+                                <input id="display"  name="Display"  type='number' min="4" step='0.1' value='0.00' max="10" required validationMessage="Please add display size. Only numbers please. Use '.' NOT ','" placeholder="Display" class="form-control" pattern="^[1-9]\d*(.\d+)?$" >
+                            </div>
+
+                            <div class="col-lg-2 control-label">
+                              <label>OS</label>
+                            </div> 
+                            <div class="col-lg-2">
+                                <input id="OS"   name="OS" type="text" validationMessage="Please add operating system" required placeholder="Operating system" class="form-control">
+                            </div>
+                             <div class="col-lg-2 control-label">
+                              <label>Stock</label>
+                            </div> 
+                            <div class="col-lg-2">
+                                <input id="stock"    name="Stock" type="text" validationMessage="Please add stock count in reasonable amounts."  required placeholder="Stock count" pattern="[0-9]{1,6}" class="form-control">
+                            </div>
+                             <div class="col-lg-2 control-label">
+                              <label>Monthly €</label>
+                            </div> 
+                            <div class="col-lg-2">
+                                <input id="monthly"   name="Monthly" type="text" validationMessage="Please add price for monthly pay. Only numbers please. Use '.' NOT ','" required placeholder="How much price for month" class="form-control" pattern="^[1-9]\d*(.\d+)?$" >
+                            </div>
+                             <div class="col-lg-2 control-label">
+                              <label>Onetime €</label>
+                            </div> 
+                            <div class="col-lg-2">
+                                <input id="onetime" name="Onetime" type="text"  required validationMessage="Please add price when paid once. Only numbers please. Use '.' NOT ','" placeholder="How much price if paid once" class="form-control" pattern="^[1-9]\d*(.\d+)?$" >
+                            </div>
+
+                        </div> 
+                    </div>
+                </fieldset>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <p class="status"></p>
+                            </div>
+
+        </form>
+    </div>
+            
+                 
+    </div>
+
+ 
+           
+</div>
+         <script src="js/app.js"> </script>
+           <!-- Template which Kendo uses to generate specific page parts -->
+            <script type="text/x-kendo-template" id="template">
+                <div class="tabstrip">
+                    <ul>
+                        <!-- Adds class which Kendo understands the active one -->
+                        <li class="k-state-active">
+                            Basic Information
+                        </li>
+                        <li class="images_tab">
+                            Images
+                        </li>
+                    </ul>
+                    <div>
+                        <div class='phone-details'>
+                            <ul>
+                            <!--Kendo uses hashtag markup to bind data -->
+                                <H2><u>#= Model #</u></H2>
+                                <p><label style="width: auto; padding-left: 10px;">Monthly</label><b style="color: green"> #= Monthly # </b>  <label style="width: auto; padding-left: 10px;">One-time</label><b style="color: green"> #= Onetime #</b></p>
+
+                                <!-- Keep sure app doesn't crash on empty values with if statements -->
+                                # if (data.Image && data.Image.length) { #
+                                <img src='#= Image# ' height="350" width="350" alt="image"/>
+                                # } else { #
+                                <h3>No image. Yet</h3>
+                                # } #
+                                <div>
+                                <h3> <u><b>Description</b> </u></h3>
+                               <p> # if (data.Details && data.Details.length) { # </p>
+                              <span>#: Details # </span>
+                                # } else { #
+                              <span>No description. Yet.</span>
+                                # } #
+
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="images">
+                        <p> # if (data.Image2 && data.Image2.length) { # 
+                        <img height="200" width="200" src='#: Image2# ' alt="image"/>
+                        # } else { #
+                        <h3>No additional images. Yet.</h3>
+                        # } #
+                        </p>
+                        # if (data.Image3 && data.Image3.length) { # 
+                        <img height="200" width="200" src='#: Image3# ' alt="image"/>
+                        # } else { #
+                        <span></span>
+                         # } #
+                     </div>
+
+                </div>
+
+
+            </script>
+
+            
+
+
+
+</body>
+</html>

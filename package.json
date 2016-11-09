@@ -1,0 +1,24 @@
+{
+  "name": "Phone_browser",
+  "version": "1.0.0",
+  "description": "NodeJS & Kendo UI based phone browser",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tonaldo/Kendo_phonebrowser"
+  },
+  "keywords": [
+    "UIgrid",
+    "NodeJS",
+    "Angular"
+  ],
+  "author": "Toni Matilainen",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "mongodb": "^2.0.43"
+  }
+}
